@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-import GithubSearch from './components/GithubSearch.vue'
-
 import type { GithubUser, GithubRepository } from './types/github';
 import { getGithubUser, getGithubRepositories } from './api/githubApi';
+
 import RepositoryCard from './components/RepositoryCard.vue';
+import UserProfile from './components/UserProfile.vue';
+import GithubSearch from './components/GithubSearch.vue'
 
 type SortOption = 'updated' | 'stars' | 'name';
 
@@ -75,6 +76,8 @@ async function searchGithubUser(username: string): Promise<void> {
     </div>
 
     <template v-if="user && !loading">
+      <UserProfile .user="user" />
+      
       <section class="repositories-section">
         <div class="section-header">
           <div>
