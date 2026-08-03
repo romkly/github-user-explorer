@@ -5,12 +5,9 @@ import GithubSearch from './components/GithubSearch.vue'
 
 import type { GithubUser, GithubRepository } from './types/github';
 import { getGithubUser, getGithubRepositories } from './api/githubApi';
+import RepositoryCard from './components/RepositoryCard.vue';
 
 type SortOption = 'updated' | 'stars' | 'name';
-
-defineProps<{
-    repository: GithubRepository;
-}>();
 
 const user = ref<GithubUser | null>(null);
 const repositories = ref<GithubRepository[]>([]);
@@ -77,8 +74,48 @@ async function searchGithubUser(username: string): Promise<void> {
       Fetching data from Github...
     </div>
 
-    <div v-if="sortedRepositories.length" class="repository-grid">
-      <h3>{{ repository.name }}</h3>
-    </div>
+    <template v-if="user && !loading">
+      <section class="repositories-section">
+        <div class="section-header">
+          <div>
+            <h2>Repositories</h2>
+            <p>
+              {{ repositories.length }} public projects has been found.
+            </p>
+          </div>
+
+          <label class="sort-control">
+            Sort
+
+            <select v-model="sortOption">
+              <option value="updated">
+                Last updated
+              </option>
+              <option value="stars">
+                Most stars
+              </option>
+              <option value="name">
+                Name
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <div
+          v-if="sortedRepositories.length"
+          class="repository-grid"
+        >
+          <RepositoryCard
+            v-for="repository in sortedRepositories"
+            :key="repository.id"
+            :repository="repository"  
+          />
+        </div>
+
+        <p v-else class="empty-message">
+          This user has no public repositories,
+        </p>
+      </section>
+    </template>
   </main>
 </template>
