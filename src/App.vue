@@ -76,8 +76,8 @@ async function searchGithubUser(username: string): Promise<void> {
     </div>
 
     <template v-if="user && !loading">
-      <UserProfile .user="user" />
-      
+      <UserProfile :user="user" />
+
       <section class="repositories-section">
         <div class="section-header">
           <div>
