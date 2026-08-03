@@ -1,6 +1,7 @@
 import type {
     GithubUser,
     GithubRepository,
+    GithubListUser,
 } from '../types/github';
 
 const GITHUB_API_URL = 'https://api.github.com';
@@ -35,4 +36,20 @@ export async function getGithubRepositories(username: string): Promise<GithubRep
     const response = await fetch(`${GITHUB_API_URL}/users/${encodedUsername}/repos?per_page=100&sort=updated`);
 
     return handleResponse<GithubRepository[]>(response);
+}
+
+export async function getGithubFollowers(username: string): Promise<GithubListUser[]> {
+    const encodedUsername = encodeURIComponent(username);
+
+    const response = await fetch(`${GITHUB_API_URL}/users/${encodedUsername}/followers?per_page=50`);
+
+    return handleResponse<GithubListUser[]>(response);
+}
+
+export async function getGithubFollowing(username: string): Promise<GithubListUser[]> {
+    const encodedUsername = encodeURIComponent(username);
+
+    const response = await fetch(`${GITHUB_API_URL}/users/${encodedUsername}/following?per_page=50`);
+
+    return handleResponse<GithubListUser[]>(response);
 }

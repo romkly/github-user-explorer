@@ -21,3 +21,10 @@ export interface GithubRepository {
     forks_count: number;
     updated_at: string;
 }
+
+export interface GithubListUser {
+    id: string;
+    login: string;
+    avatar_url: string;
+    html_url: string;
+}

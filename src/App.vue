@@ -1,12 +1,42 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-import type { GithubUser, GithubRepository } from './types/github';
-import { getGithubUser, getGithubRepositories } from './api/githubApi';
+import type { 
+  GithubUser, 
+  GithubRepository,
+  GithubListUser, 
+} from './types/github';
+
+import { 
+  getGithubUser, 
+  getGithubRepositories,
+  getGithubFollowers,
+  getGithubFollowing, 
+} from './api/githubApi';
 
 import RepositoryCard from './components/RepositoryCard.vue';
 import UserProfile from './components/UserProfile.vue';
-import GithubSearch from './components/GithubSearch.vue'
+import GithubSearch from './components/GithubSearch.vue';
+import GithubUserList from './components/GithubUserList.vue';
+
+type UserListType = "followers" | "following";
+
+const displayedUsers = ref<GithubListUser[]>([]);
+const displayedListType = ref<UserListType | null>(null);
+const userListLoading = ref(false);
+const userListError = ref("");
+
+const displayedListTitle = computed(() => {
+    if (displayedListType.value === "followers") {
+        return `Followers of ${user.value?.login ?? ""}`;
+    }
+
+    if (displayedListType.value === "following") {
+        return `${user.value?.login ?? ""} is following`;
+    }
+
+    return "";
+});
 
 type SortOption = 'updated' | 'stars' | 'name';
 
@@ -31,27 +61,93 @@ const sortedRepositories = computed(() => {
 });
 
 async function searchGithubUser(username: string): Promise<void> {
-  loading.value = true;
-  errorMessage.value = "";
-  user.value = null;
-  repositories.value = [];
+    loading.value = true;
+    errorMessage.value = "";
+    user.value = null;
+    repositories.value = [];
 
-  try {
-    const [userData, repositoryData] = await Promise.all([
-      getGithubUser(username),
-      getGithubRepositories(username),
-    ]);
+    closeUserList();
 
-    user.value = userData;
-    repositories.value = repositoryData;
-  } catch (error: unknown) {
-    errorMessage.value = 
-      error instanceof Error
-        ? error.message
-        : 'An unknown error has occured';
-  } finally {
-    loading.value = false;
-  }
+    try {
+        const [userData, repositoryData] = await Promise.all([
+            getGithubUser(username),
+            getGithubRepositories(username),
+        ]);
+
+        user.value = userData;
+        repositories.value = repositoryData;
+    } catch (error: unknown) {
+        errorMessage.value =
+            error instanceof Error
+                ? error.message
+                : "An unknown error occurred.";
+    } finally {
+        loading.value = false;
+    }
+}
+
+async function showFollowers(): Promise<void> {
+    if (!user.value) {
+        return;
+    }
+
+    displayedListType.value = "followers";
+    displayedUsers.value = [];
+    userListError.value = "";
+    userListLoading.value = true;
+
+    try {
+        displayedUsers.value = await getGithubFollowers(
+            user.value.login,
+        );
+    } catch (error: unknown) {
+        userListError.value =
+            error instanceof Error
+                ? error.message
+                : "Could not load followers.";
+    } finally {
+        userListLoading.value = false;
+    }
+}
+
+async function showFollowing(): Promise<void> {
+    if (!user.value) {
+        return;
+    }
+
+    displayedListType.value = "following";
+    displayedUsers.value = [];
+    userListError.value = "";
+    userListLoading.value = true;
+
+    try {
+        displayedUsers.value = await getGithubFollowing(
+            user.value.login,
+        );
+    } catch (error: unknown) {
+        userListError.value =
+            error instanceof Error
+                ? error.message
+                : "Could not load following users.";
+    } finally {
+        userListLoading.value = false;
+    }
+}
+
+function closeUserList(): void {
+    displayedListType.value = null;
+    displayedUsers.value = [];
+    userListError.value = "";
+}
+
+async function selectUser(username: string): Promise<void> {
+    closeUserList();
+    await searchGithubUser(username);
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
 }
 </script>
 
@@ -76,7 +172,24 @@ async function searchGithubUser(username: string): Promise<void> {
     </div>
 
     <template v-if="user && !loading">
-      <UserProfile :user="user" />
+      <UserProfile 
+        :user="user"
+        @show-followers="showFollowers"
+        @show-following="showFollowing" 
+      />
+
+      <p v-if="userListError" class="error-message">
+          {{ userListError }}
+      </p>
+
+      <GithubUserList
+          v-if="displayedListType"
+          :title="displayedListTitle"
+          :users="displayedUsers"
+          :loading="userListLoading"
+          @close="closeUserList"
+          @select-user="selectUser"
+      />
 
       <section class="repositories-section">
         <div class="section-header">

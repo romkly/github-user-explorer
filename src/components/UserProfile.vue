@@ -4,6 +4,11 @@ import type { GithubUser } from '../types/github';
 defineProps<{
     user: GithubUser;
 }>();
+
+const emit = defineEmits<{
+    showFollowers: [];
+    showFollowing: [];
+}>();
 </script>
 
 <template>
@@ -39,16 +44,24 @@ defineProps<{
                     <strong>{{ user.public_repos }}</strong>
                     <span>Repositories</span>
                 </div>
-                
-                <div>
-                    <strong>{{ user.followers }}</strong>
-                    <span>Followers</span>  
-                </div>
 
-                <div>
+                <button
+                    type="button"
+                    class="profile-stat-button"
+                    @click="emit('showFollowers')"
+                >
+                    <strong>{{ user.followers }}</strong>
+                    <span>Followers</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="profile-stat-button"
+                    @click="emit('showFollowing')"
+                >
                     <strong>{{ user.following }}</strong>
                     <span>Following</span>
-                </div>
+                </button>
             </div>
         </div>
     </section>
