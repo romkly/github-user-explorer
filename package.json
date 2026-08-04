@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "highcharts": "^13.0.0",
+    "highcharts-vue": "^2.0.1",
     "vue": "^3.5.40"
   },
   "devDependencies": {
