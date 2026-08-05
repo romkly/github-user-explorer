@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import Highcharts from "highcharts";
-import { Chart as HighchartsChart } from "highcharts-vue";
+import { Chart } from "highcharts-vue";
 
 import type { Options } from "highcharts";
 
@@ -21,13 +21,11 @@ const languageData = computed(() => {
         languageCounts.set(language, currentCount + 1);
     }
 
-    const result = Array.from(languageCounts.entries())
+    return Array.from(languageCounts.entries())
         .map(([name, count]) => ({
             name, 
             y: count
         }));
-
-    return result;
 });
 
 const chartOptions = computed<Options>(() => ({
@@ -78,7 +76,7 @@ const chartOptions = computed<Options>(() => ({
 
 <template>
     <section class="dashboard-card">
-        <HighchartsChart
+        <Chart
             v-if="languageData.length > 0"
             :highcharts="Highcharts"
             :options="chartOptions"

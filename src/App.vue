@@ -19,6 +19,7 @@ import UserProfile from './components/UserProfile.vue';
 import GithubSearch from './components/GithubSearch.vue';
 import GithubUserList from './components/GithubUserList.vue';
 import ProgLanguageChart from './components/ProgLanguageChart.vue';
+import CreatedByYearChart from './components/CreatedByYearChart.vue';
 
 type UserListType = "followers" | "following";
 
@@ -186,6 +187,9 @@ async function selectUser(username: string): Promise<void> {
         <h2>Developer Dashboard</h2>
         <div class="dashboard-grid">
           <ProgLanguageChart
+            :repositories="repositories"
+          />
+          <CreatedByYearChart
             :repositories="repositories"
           />
         </div>
