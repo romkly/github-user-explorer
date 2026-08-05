@@ -29,3 +29,24 @@ export interface GithubListUser {
     avatar_url: string;
     html_url: string;
 }
+
+export interface GithubCommit {
+    sha: string;
+    html_url: string;
+
+    commit: {
+        author: {
+            name: string;
+            email: string;
+            date: string;
+        } | null;
+
+        committer: {
+            name: string;
+            email: string;
+            date: string;
+        } | null;
+
+        message: string;
+    };
+}

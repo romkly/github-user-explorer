@@ -2,6 +2,7 @@ import type {
     GithubUser,
     GithubRepository,
     GithubListUser,
+    GithubCommit
 } from '../types/github';
 
 const GITHUB_API_URL = 'https://api.github.com';
@@ -52,4 +53,18 @@ export async function getGithubFollowing(username: string): Promise<GithubListUs
     const response = await fetch(`${GITHUB_API_URL}/users/${encodedUsername}/following?per_page=50`);
 
     return handleResponse<GithubListUser[]>(response);
+}
+
+export async function getRepositoryCommits(
+    owner: string,
+    repositoryName: string,
+): Promise<GithubCommit[]> {
+    const encodedOwner = encodeURIComponent(owner);
+    const encodedRepository = encodeURIComponent(repositoryName);
+
+    const response = await fetch(
+        `${GITHUB_API_URL}/repos/${encodedOwner}/${encodedRepository}/commits?per_page=100`,
+    );
+
+    return handleResponse<GithubCommit[]>(response);
 }
