@@ -20,6 +20,7 @@ import GithubSearch from './components/GithubSearch.vue';
 import GithubUserList from './components/GithubUserList.vue';
 import ProgLanguageChart from './components/ProgLanguageChart.vue';
 import CreatedByYearChart from './components/CreatedByYearChart.vue';
+import StarsChart from './components/StarsChart.vue';
 
 type UserListType = "followers" | "following";
 
@@ -190,6 +191,9 @@ async function selectUser(username: string): Promise<void> {
             :repositories="repositories"
           />
           <CreatedByYearChart
+            :repositories="repositories"
+          />
+          <StarsChart
             :repositories="repositories"
           />
         </div>
