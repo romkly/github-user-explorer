@@ -18,6 +18,7 @@ import RepositoryCard from './components/RepositoryCard.vue';
 import UserProfile from './components/UserProfile.vue';
 import GithubSearch from './components/GithubSearch.vue';
 import GithubUserList from './components/GithubUserList.vue';
+import ProgLanguageChart from './components/ProgLanguageChart.vue';
 
 type UserListType = "followers" | "following";
 
@@ -177,6 +178,18 @@ async function selectUser(username: string): Promise<void> {
         @show-followers="showFollowers"
         @show-following="showFollowing" 
       />
+
+      <section
+        v-if="user && !loading"
+        class="dashboard-section"
+      >
+        <h2>Developer Dashboard</h2>
+        <div class="dashboard-grid">
+          <ProgLanguageChart
+            :repositories="repositories"
+          />
+        </div>
+      </section>
 
       <p v-if="userListError" class="error-message">
           {{ userListError }}
