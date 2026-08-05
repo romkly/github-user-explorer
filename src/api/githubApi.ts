@@ -2,7 +2,8 @@ import type {
     GithubUser,
     GithubRepository,
     GithubListUser,
-    GithubCommit
+    GithubCommit,
+    GithubContributor,
 } from '../types/github';
 
 const GITHUB_API_URL = 'https://api.github.com';
@@ -67,4 +68,27 @@ export async function getRepositoryCommits(
     );
 
     return handleResponse<GithubCommit[]>(response);
+}
+
+export async function getRepositoryContributors(
+    owner: string,
+    repositoryName: string,
+): Promise<GithubContributor[]> {
+    const encodedOwner = encodeURIComponent(owner);
+    const encodedRepository = encodeURIComponent(repositoryName);
+
+    const response = await fetch(
+        `${GITHUB_API_URL}/repos/${encodedOwner}/${encodedRepository}/contributors?per_page=100`,
+        {
+            headers: {
+                Accept: "application/vnd.github+json",
+            },
+        },
+    );
+
+    if (response.status === 204) {
+        return [];
+    }
+
+    return handleResponse<GithubContributor[]>(response);
 }

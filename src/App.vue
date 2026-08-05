@@ -22,6 +22,7 @@ import ProgLanguageChart from './components/ProgLanguageChart.vue';
 import CreatedByYearChart from './components/CreatedByYearChart.vue';
 import StarsChart from './components/StarsChart.vue';
 import CommitActivityChart from './components/CommitActivityChart.vue';
+import ContributorsChart from './components/ContributorsChart.vue';
 
 type UserListType = "followers" | "following";
 
@@ -203,6 +204,10 @@ async function selectUser(username: string): Promise<void> {
             <CommitActivityChart
                 :owner="user.login"
                 :repositories="repositories"
+            />
+            <ContributorsChart
+              :owner="user.login"
+              :repositories="repositories"
             />
         </div>
       </section>
