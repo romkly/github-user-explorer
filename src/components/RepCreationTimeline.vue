@@ -124,11 +124,6 @@ const chartOptions = computed<Options>(() => ({
         },
     },
 
-    accessibility: {
-        description:
-            "A line chart showing the number of public repositories created each month.",
-    },
-
     xAxis: {
         type: "datetime",
 

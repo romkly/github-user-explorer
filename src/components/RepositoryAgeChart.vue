@@ -132,11 +132,6 @@ const chartOptions = computed<Options>(() => ({
         },
     },
 
-    accessibility: {
-        description:
-            "A horizontal bar chart comparing repository age in months.",
-    },
-
     xAxis: {
         categories: repositoryAgeData.value.map(
             (repository) => repository.name,

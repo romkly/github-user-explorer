@@ -27,6 +27,7 @@ import RepositorySizeChart from './components/RepositorySizeChart.vue';
 import RepositoryAgeChart from './components/RepositoryAgeChart.vue';
 import OpenIssuesChart from './components/OpenIssuesChart.vue';
 import RepCreationTimeline from './components/RepCreationTimeline.vue';
+import RepositoryPopularityScore from './components/RepositoryPopularityScore.vue';
 
 type UserListType = "followers" | "following";
 
@@ -212,6 +213,9 @@ async function selectUser(username: string): Promise<void> {
             :repositories="repositories"
           />
           <RepCreationTimeline
+            :repositories="repositories"
+          />
+          <RepositoryPopularityScore
             :repositories="repositories"
           />
         </div>

@@ -67,11 +67,6 @@ const chartOptions = computed<Options>(() => ({
         },
     },
 
-    accessibility: {
-        description:
-            "A horizontal bar chart showing repositories with the highest open issue counts. GitHub may include pull requests in these counts.",
-    },
-
     xAxis: {
         categories: repositoryIssueData.value.map(
             (repository) => repository.name,
