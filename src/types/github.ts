@@ -15,6 +15,7 @@ export interface GithubRepository {
     name: string;
     full_name: string;
     description: string | null;
+    size: number;
     html_url: string;
     language: string | null;
     stargazers_count: number;
