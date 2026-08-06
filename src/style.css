@@ -379,7 +379,6 @@ a:hover {
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
 }
 
 .dashboard-card {
@@ -389,6 +388,7 @@ a:hover {
   border-radius: 16px;
   background: white;
   box-shadow: 0 8px 24px rgb(15 23 42 / 6%);
+  margin-right: 20px;
 }
 
 .empty-chart-message {
@@ -397,7 +397,8 @@ a:hover {
   text-align: center;
 }
 
-.dashboard-wide {
+.dashboard-wide,
+.dashboard-card {
   margin-top: 20px;
 }
 
