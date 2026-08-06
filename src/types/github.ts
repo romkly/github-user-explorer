@@ -25,6 +25,7 @@ export interface GithubRepository {
     open_issues_count: number;
     updated_at: string;
     created_at: string;
+    license: GithubLicense | null;
 }
 
 export interface GithubListUser {
@@ -61,4 +62,13 @@ export interface GithubContributor {
     avatar_url: string;
     html_url: string;
     contributions: number;
+}
+
+export interface GithubLicense {
+    key: string;
+    name: string;
+    spdx_id: string | null;
+    url: string | null;
+    node_id?: string;
+    html_url?: string | null;
 }

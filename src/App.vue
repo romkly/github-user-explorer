@@ -29,6 +29,7 @@ import OpenIssuesChart from './components/OpenIssuesChart.vue';
 import RepCreationTimeline from './components/RepCreationTimeline.vue';
 import RepositoryPopularityScore from './components/RepositoryPopularityScore.vue';
 import ProgLanguageEvoChart from './components/ProgLanguageEvoChart.vue';
+import LicenseChart from './components/LicenseChart.vue';
 
 type UserListType = "followers" | "following";
 
@@ -220,6 +221,9 @@ async function selectUser(username: string): Promise<void> {
             :repositories="repositories"
           />
           <ProgLanguageEvoChart
+            :repositories="repositories"
+          />
+          <LicenseChart
             :repositories="repositories"
           />
         </div>

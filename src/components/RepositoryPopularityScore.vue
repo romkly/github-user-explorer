@@ -164,7 +164,7 @@ const chartOptions = computed<Options>(() => ({
             color: "#cccccc",
         },
     },
-    
+
     xAxis: {
         categories: popularityData.value.map(
             (repository) => repository.name,
@@ -354,11 +354,6 @@ const chartOptions = computed<Options>(() => ({
 
         <p v-else class="empty-chart-message">
             No repository popularity data is available.
-        </p>
-
-        <p class="chart-method-note">
-            Custom formula: stars × 4 + forks × 6 +
-            watchers × 3 + activity score.
         </p>
     </section>
 </template>
