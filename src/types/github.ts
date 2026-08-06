@@ -20,6 +20,7 @@ export interface GithubRepository {
     language: string | null;
     stargazers_count: number;
     forks_count: number;
+    open_issues_count: number;
     updated_at: string;
     created_at: string;
 }
