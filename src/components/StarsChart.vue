@@ -52,11 +52,6 @@ const chartOptions = computed<Options>(() => ({
         },
     },
 
-    accessibility: {
-        description:
-            "A horizontal bar chart ranking the developer's public repositories by GitHub stars.",
-    },
-
     xAxis: {
         categories: topRepositories.value.map(
             (repository) => repository.name,

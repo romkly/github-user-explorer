@@ -174,11 +174,6 @@ const chartOptions = computed<Options>(() => ({
         },
     },
 
-    accessibility: {
-        description:
-            "An area chart showing the number of commits over time for the selected repository.",
-    },
-
     xAxis: {
         type: "datetime",
 

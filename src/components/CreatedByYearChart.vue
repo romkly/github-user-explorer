@@ -59,11 +59,6 @@ const chartOptions = computed<Options>(() => ({
         },
     },
 
-    accessibility: {
-        description:
-            "A column chart showing how many public repositories the developer created each year.",
-    },
-
     xAxis: {
         categories: repositoriesByYear.value.map((item) =>
             item.year.toString(),

@@ -95,11 +95,6 @@ const chartOptions = computed<Options>(() => ({
         },
     },
 
-    accessibility: {
-        description:
-            "A horizontal bar chart ranking contributors by their contribution count for the selected repository.",
-    },
-
     xAxis: {
         categories: topContributors.value.map(
             (contributor) => contributor.login,
