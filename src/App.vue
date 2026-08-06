@@ -24,6 +24,7 @@ import StarsChart from './components/StarsChart.vue';
 import CommitActivityChart from './components/CommitActivityChart.vue';
 import ContributorsChart from './components/ContributorsChart.vue';
 import RepositorySizeChart from './components/RepositorySizeChart.vue';
+import RepositoryAgeChart from './components/RepositoryAgeChart.vue';
 
 type UserListType = "followers" | "following";
 
@@ -200,6 +201,9 @@ async function selectUser(username: string): Promise<void> {
             :repositories="repositories"
           />
           <RepositorySizeChart
+            :repositories="repositories"
+          />
+          <RepositoryAgeChart
             :repositories="repositories"
           />
         </div>
